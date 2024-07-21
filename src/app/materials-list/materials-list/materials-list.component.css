@@ -26,9 +26,13 @@ button {
   height: 15%;
   width: 15%;
 }
+.rare-material-list-img img {
+  margin-left: 2px;
+  height: 15%;
+  width: 15%;
+}
 
-
-.common-material-list-img {
+.common-material-list-img  {
   display: flex;
   flex-direction: column-reverse;
 }
@@ -40,13 +44,17 @@ button {
 }
 
 .image-item img {
-  margin-right: 10px; /* Przestrzeń między obrazkiem a tekstem */
+  margin-right: 10px;
 }
 
 .image-item span {
-  font-size: 14px; /* Rozmiar tekstu */
+  font-size: 14px;
 }
 .image-item:hover {
   background: rgba(0, 0, 0, 0.05);
   cursor: pointer;
+}
+.rare-material-list-img  {
+  max-height: 597px;
+  overflow: auto;
 }

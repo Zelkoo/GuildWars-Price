@@ -13,7 +13,7 @@
 <p>Start Date Timestamp: {{ startDate }}</p>
 <p>End Date Timestamp: {{ endDate }}</p>
 <div>
-  <h1>{{selectedItem}} price history</h1>
+  <h1>{{selectedItem | removeUnderscoresPipe}} price history</h1>
   @if (priceHistory) {
   @for (item of priceHistory; track item) {
   <h2>{{item.date}}</h2>

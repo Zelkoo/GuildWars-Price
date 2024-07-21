@@ -1,4 +1,5 @@
-/*img {*/
-/*  width: 10%;*/
-/*  height: 10%;*/
-/*}*/
+app-materials-list {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

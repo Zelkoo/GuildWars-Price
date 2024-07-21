@@ -16,16 +16,15 @@ import {MatList, MatListItem} from "@angular/material/list";
 import {DateConverterService} from "./shared/date-converter.service";
 import {ConvertedData} from "./shared/interfaces/interface";
 import {Subscription} from "rxjs";
-import {RareMaterial} from "./shared/enums/enums";
 import {MaterialsListComponent} from "./materials-list/materials-list/materials-list.component";
-
+import {RemoveUnderscorePipe} from "./shared/pipe/remove-underscore";
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, FormsModule, HttpClientModule, JsonPipe, NgIf, MatDateRangeInput, MatLabel, MatFormField, MatDatepickerToggle, MatDateRangePicker, MatFormFieldModule, MatDatepickerModule, MatListItem, MatList, MaterialsListComponent],
+  imports: [RouterOutlet, FormsModule, HttpClientModule, NgIf, MatDateRangeInput, MatLabel, MatFormField, MatDatepickerToggle, MatDateRangePicker, MatFormFieldModule, MatDatepickerModule, MatListItem, MatList, MaterialsListComponent, RemoveUnderscorePipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  providers: [provideNativeDateAdapter()],
+  providers: [provideNativeDateAdapter(), RemoveUnderscorePipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
@@ -38,17 +37,20 @@ export class AppComponent implements OnInit, OnDestroy{
   public endDate!: Date;
   public startDateTimestamp!: number;
   public endDateTimestamp!: number;
-  selectedItem!: string;
+  public idItem!: string;
+  public selectedItem!: string;
 
   constructor(private priceHistoryService: GetPriceServiceService, private dateConverter: DateConverterService) {}
 
   public ngOnInit(): void {
-
+    
   }
 
 
-  onItemSelected(item: string) {
-    this.selectedItem = item;
+  onItemSelected(item: {name: string, id: string}) {
+    this.selectedItem = item.name;
+    this.idItem = item.id;
+    console.log(this.idItem)
   }
   public ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -63,7 +65,7 @@ export class AppComponent implements OnInit, OnDestroy{
       this.endDateTimestamp = this.dateConverter.convertDateToTimestamp(this.endDate);
     }
 
-    this.subscription = this.priceHistoryService.getPriceHistory(this.startDateTimestamp, this.endDateTimestamp, RareMaterial.GLOB_OF_ECTOPLASM).subscribe(data => {
+    this.subscription = this.priceHistoryService.getPriceHistory(this.startDateTimestamp, this.endDateTimestamp, this.idItem).subscribe(data => {
       this.priceHistory = data.map((item: any) => ({
         id: item.m,
         price: item.p,
