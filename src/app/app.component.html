@@ -1,0 +1,26 @@
+<mat-form-field appearance="fill">
+  <mat-label>Enter a date range</mat-label>
+  <mat-date-range-input [rangePicker]="picker">
+    <input matStartDate placeholder="Start date" [(ngModel)]="startDate">
+    <input matEndDate placeholder="End date" [(ngModel)]="endDate">
+  </mat-date-range-input>
+  <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-date-range-picker #picker></mat-date-range-picker>
+</mat-form-field>
+<button mat-raised-button color="primary" (click)="getPriceHistory()">Show price history</button>
+
+<p>Start Date Timestamp: {{ startDate }}</p>
+<p>End Date Timestamp: {{ endDate }}</p>
+<div>
+  <h1>{{selectedItem}} price history</h1>
+  @if (priceHistory) {
+  @for (item of priceHistory; track item) {
+  <h2>{{item.date}}</h2>
+  <ul>
+    <li>{{item.price}}</li>
+  </ul>
+  }
+  }
+</div>
+<app-materials-list (itemSelected)="onItemSelected($event)"></app-materials-list>

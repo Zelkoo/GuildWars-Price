@@ -1,0 +1,10 @@
+{
+  "/api": {
+    "target": "https://kamadan.gwtoolbox.com",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  }
+}

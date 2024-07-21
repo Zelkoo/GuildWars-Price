@@ -1,0 +1,52 @@
+.material-list-container {
+  height: auto;
+  width: 240px;
+  border: 1px black solid;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.material-type {
+  border-bottom: 1px black solid;
+  height: 40px;
+  display: flex;
+}
+
+button.rare-label {
+  flex-grow: 1;
+}
+
+button {
+  font-size: 14px;
+}
+
+.common-material-list-img img {
+  margin-left: 2px;
+  height: 15%;
+  width: 15%;
+}
+
+
+.common-material-list-img {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.image-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.image-item img {
+  margin-right: 10px; /* Przestrzeń między obrazkiem a tekstem */
+}
+
+.image-item span {
+  font-size: 14px; /* Rozmiar tekstu */
+}
+.image-item:hover {
+  background: rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}

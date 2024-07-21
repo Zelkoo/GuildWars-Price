@@ -1,0 +1,12 @@
+<div class="material-list-container">
+  <div class="material-type">
+    <button class="common-label" (click)="commonMaterialActive()">Common Material</button>
+    <button class="rare-label" (click)="rareMaterialActive()">Rare Material</button>
+  </div>
+  <div class="common-material-list-img" *ngIf="commonIsActive">
+    <div class="image-item" *ngFor="let image of commonMaterialsImages" (click)="onImageClick(image.name)">
+      <img [src]="image.src" [alt]="image.name">
+      <span>{{ image.name }}</span>
+    </div>
+  </div>
+</div>
