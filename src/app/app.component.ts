@@ -18,10 +18,19 @@ import {ConvertedData} from "./shared/interfaces/interface";
 import {Subscription} from "rxjs";
 import {MaterialsListComponent} from "./materials-list/materials-list/materials-list.component";
 import {RemoveUnderscorePipe} from "./shared/pipe/remove-underscore";
+import {
+  MatCell, MatCellDef,
+  MatColumnDef,
+  MatHeaderCell,
+  MatHeaderCellDef,
+  MatHeaderRow, MatHeaderRowDef,
+  MatRow, MatRowDef,
+  MatTable
+} from "@angular/material/table";
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, FormsModule, HttpClientModule, NgIf, MatDateRangeInput, MatLabel, MatFormField, MatDatepickerToggle, MatDateRangePicker, MatFormFieldModule, MatDatepickerModule, MatListItem, MatList, MaterialsListComponent, RemoveUnderscorePipe],
+  imports: [RouterOutlet, FormsModule, HttpClientModule, NgIf, MatDateRangeInput, MatLabel, MatFormField, MatDatepickerToggle, MatDateRangePicker, MatFormFieldModule, MatDatepickerModule, MatListItem, MatList, MaterialsListComponent, RemoveUnderscorePipe, MatRow, MatHeaderRow, MatCell, MatHeaderCell, MatColumnDef, MatTable, MatHeaderCellDef, MatCellDef, MatRowDef, MatHeaderRowDef],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   providers: [provideNativeDateAdapter(), RemoveUnderscorePipe],
@@ -39,11 +48,13 @@ export class AppComponent implements OnInit, OnDestroy{
   public endDateTimestamp!: number;
   public idItem!: string;
   public selectedItem!: string;
+  public dataSource!: ConvertedData[];
+  displayedColumns: string[] = ['demo-id', 'demo-price', 'demo-date'];
 
   constructor(private priceHistoryService: GetPriceServiceService, private dateConverter: DateConverterService) {}
 
   public ngOnInit(): void {
-    
+
   }
 
 
@@ -71,6 +82,8 @@ export class AppComponent implements OnInit, OnDestroy{
         price: item.p,
         date: this.dateConverter.convertTimestampToDate(item.t)
       }));;
+      this.dataSource = this.priceHistory
+      console.log(this.priceHistory)
     });
   }
 
