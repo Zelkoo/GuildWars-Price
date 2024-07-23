@@ -10,17 +10,31 @@
 </mat-form-field>
 <button mat-raised-button color="primary" (click)="getPriceHistory()">Show price history</button>
 
-<p>Start Date Timestamp: {{ startDate }}</p>
-<p>End Date Timestamp: {{ endDate }}</p>
-<div>
-  <h1>{{selectedItem | removeUnderscoresPipe}} price history</h1>
-  @if (priceHistory) {
-  @for (item of priceHistory; track item) {
-  <h2>{{item.date}}</h2>
-  <ul>
-    <li>{{item.price}}</li>
-  </ul>
-  }
-  }
+<div class="table-container">
+  <div *ngIf="selectedItem" class=" demo-table">
+    <h3>{{selectedItem | removeUnderscoresPipe}} vendor price</h3>
+    <table mat-table [dataSource]="priceHistory" class="mat-elevation-z8">
+      <!-- Position Column -->
+      <ng-container matColumnDef="demo-id">
+        <th mat-header-cell *matHeaderCellDef> Id </th>
+        <td mat-cell *matCellDef="let item"> {{item.id}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="demo-price">
+        <th mat-header-cell *matHeaderCellDef> Vendor Price </th>
+        <td mat-cell *matCellDef="let item"> {{item.price}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="demo-date">
+        <th mat-header-cell *matHeaderCellDef> Date </th>
+        <td mat-cell *matCellDef="let item"> {{item.date}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
 </div>
 <app-materials-list (itemSelected)="onItemSelected($event)"></app-materials-list>
