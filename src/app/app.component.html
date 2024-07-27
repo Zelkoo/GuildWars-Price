@@ -11,9 +11,9 @@
 <button mat-raised-button color="primary" (click)="getPriceHistory()">Show price history</button>
 
 <div class="table-container">
-  <div *ngIf="selectedItem" class=" demo-table">
-    <h3>{{selectedItem | removeUnderscoresPipe}} vendor price</h3>
-    <table mat-table [dataSource]="priceHistory" class="mat-elevation-z8">
+  <div *ngIf="priceHistory$ | async" class=" demo-table">
+    <h3>{{selectedItem}} vendor price</h3>
+    <table mat-table [dataSource]="priceHistory$ | async" class="mat-elevation-z8">
       <!-- Position Column -->
       <ng-container matColumnDef="demo-id">
         <th mat-header-cell *matHeaderCellDef> Id </th>
