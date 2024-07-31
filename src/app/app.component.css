@@ -3,12 +3,3 @@ app-materials-list {
   top: 0;
   right: 0;
 }
-.demo-table {
-  width: 50%;
-  max-width: 500px;
-}
-.table-container {
-  display: flex;
-  justify-content: center;
-  overflow: auto;
-}

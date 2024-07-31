@@ -1,6 +1,10 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Output} from '@angular/core';
 import {NgForOf, NgIf} from "@angular/common";
 import {CommonMaterial, RareMaterial} from "../../shared/enums/enums";
+import {Observable, take} from "rxjs";
+import {PriceEntry, PriceHistoryState} from "../../store/price-history.reducer";
+import {select, Store} from "@ngrx/store";
+import {AppState} from "../../store/price-history.actions";
 
 @Component({
   selector: 'app-materials-list',
@@ -14,11 +18,12 @@ import {CommonMaterial, RareMaterial} from "../../shared/enums/enums";
 })
 export class MaterialsListComponent {
   @Output() itemSelected = new EventEmitter<any>();
+  priceHistory$: Observable<PriceHistoryState>;
 
   public rareIsActive: boolean = false;
   public commonIsActive: boolean = false;
 
-  public commonMaterialsImages = [
+  public commonMaterialsData = [
     { src: './assets/images/common-materials/Bolt_of_Cloth.png', name: 'Bolt of Cloth', id: `${CommonMaterial.BOLT_OF_CLOTH}` },
     { src: './assets/images/common-materials/Bone.png', name: 'Bone', id: `${CommonMaterial.BONES}` },
     { src: './assets/images/common-materials/Chitin_Fragment.png', name: 'Chitin Fragment', id: `${CommonMaterial.CHITIN_FRAGMENT}` },
@@ -32,7 +37,7 @@ export class MaterialsListComponent {
     { src: './assets/images/common-materials/Tanned_Hide_Square.png', name: 'Tanned Hide Square', id: `${CommonMaterial.TANNED_HIDE_SQUARE}` },
     { src: './assets/images/common-materials/Wood_Plank.png', name: 'Wood Plank', id: `${CommonMaterial.WOOD_PLANK}` }
   ];
-  public rareMaterialsImages = [
+  public rareMaterialsData = [
     { src: './assets/images/rare-materials/Amber_Chunk.png', name: 'Amber Chunk', id: `${RareMaterial.AMBER_CHUNK}` },
     { src: './assets/images/rare-materials/Bolt_of_Damask.png', name: 'Bolt of Damask', id: `${RareMaterial.BOLT_OF_DAMASK}` },
     { src: './assets/images/rare-materials/Bolt_of_Linen.png', name: 'Bolt of Linen', id: `${RareMaterial.BOLT_OF_LINEN}` },
@@ -60,17 +65,24 @@ export class MaterialsListComponent {
     { src: './assets/images/rare-materials/Vial_of_Ink.png', name: 'Vial of Ink', id: `${RareMaterial.VIAL_OF_INK}` }
   ];
 
+  constructor(private store: Store<AppState>, private cdr: ChangeDetectorRef) {
+    this.priceHistory$ = this.store.pipe(select('priceHistory'));
+  }
   public commonMaterialActive(): void {
     if (!this.commonIsActive) {
       this.commonIsActive = true;
     }
     this.rareIsActive = false;
+    this.cdr.detectChanges()
   }
   public rareMaterialActive(): void {
     if (!this.rareIsActive) {
       this.rareIsActive = true;
     }
+
     this.commonIsActive = false;
+    this.cdr.detectChanges()
+
   }
   onImageClick(item: {name: string, id: string}) {
     this.itemSelected.emit(item);
