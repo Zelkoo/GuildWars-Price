@@ -1,0 +1,18 @@
+
+BUG:
+- some material does not work when we selected them via panel
+
+TODO:
+- create login component
+- configure firebase
+- create table component to render all selected data
+- create action to change chart type
+- create options to change chart type
+- create chat component
+- improve/create UI/UX
+- create information component
+- create footer
+- create service to handle data pass
+- improve material list component
+- create trade component
+- create menu component
