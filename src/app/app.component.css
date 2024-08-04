@@ -3,3 +3,6 @@ app-materials-list {
   top: 0;
   right: 0;
 }
+::ng-deep.selected-item {
+  color: rgba(9, 183, 240, 0.84);
+}

@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, Output} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import {GetPriceServiceService} from "./get-price-service.service";
 import {AsyncPipe, NgIf} from "@angular/common";
 import {
   MatDatepickerModule,
@@ -12,7 +11,7 @@ import {MatFormField, MatFormFieldModule, MatLabel} from "@angular/material/form
 import {provideNativeDateAdapter} from "@angular/material/core";
 import {FormsModule} from "@angular/forms";
 import {MatList, MatListItem} from "@angular/material/list";
-import {DateConverterService} from "./shared/date-converter.service";
+import {DateConverterService} from "./services/date-converter.service";
 import {ConvertedData} from "./shared/interfaces/interface";
 import {Observable, Subscription, take} from "rxjs";
 import {MaterialsListComponent} from "./materials-list/materials-list/materials-list.component";
@@ -46,15 +45,10 @@ export class AppComponent implements OnInit, OnDestroy{
   public idItem!: string;
   public selectedItem!: string;
   public priceHistory!: ConvertedData[];
-  loading$: Observable<boolean>;
-  error$: Observable<any>;
   @Output() public itemData: any;
 
-  constructor(private priceHistoryService: GetPriceServiceService, private dateConverter: DateConverterService, private store: Store) {
+  constructor(private dateConverter: DateConverterService, private store: Store) {
     this.priceHistory$ = this.store.select((state: any) => state.priceHistory.data);
-    // @ts-ignore
-    this.loading$ = this.store.select(state => state.priceHistory.loading);// @ts-ignore
-    this.error$ = this.store.select(state => state.priceHistory.error);
   }
 
   public ngOnInit(): void {
@@ -79,8 +73,9 @@ export class AppComponent implements OnInit, OnDestroy{
   public dispatchAllMaterialItems(): void {
     const rareMaterialKeys = Object.values(RareMaterial);
     const commmonMaterialKeys = Object.values(CommonMaterial);
-    const start = 1720088000000;
-    const end = 1720188000000;
+    const start = this.dateConverter.calculateOneMonthFromCurrentDate();
+    const end = this.dateConverter.convertDateToTimestamp(new Date());
+
     rareMaterialKeys.forEach((itemId: string) => {
       this.store.dispatch(loadPriceHistory({ itemId, start, end }));
     })

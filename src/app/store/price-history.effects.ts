@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import * as PriceHistoryActions from './price-history.actions'
-import {DateConverterService} from "../shared/date-converter.service";
+import {DateConverterService} from "../services/date-converter.service";
 
 @Injectable()
 export class PriceHistoryEffects {

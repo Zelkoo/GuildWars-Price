@@ -39,3 +39,8 @@ export enum CommonMaterial {
   TANNED_HIDE_SQUARE = '940',
   WOOD_PLANK = '946',
 }
+
+export enum MaterialType {
+  Rare = 'rare',
+  Common = 'common'
+}

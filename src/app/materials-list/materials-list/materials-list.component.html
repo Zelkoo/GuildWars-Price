@@ -1,16 +1,16 @@
 <div class="material-list-container">
   <div class="material-type">
-    <button class="common-label" (click)="commonMaterialActive()">Common Material</button>
-    <button class="rare-label" (click)="rareMaterialActive()">Rare Material</button>
+    <button class="toggle-common-label" (click)="toggleMaterialPanel(MaterialType.Common)">Common Material</button>
+    <button class="toggle-rare-label" (click)="toggleMaterialPanel(MaterialType.Rare)">Rare Material</button>
   </div>
-  <div class="common-material-list-img" *ngIf="commonIsActive">
-    <div class="image-item" *ngFor="let image of commonMaterialsData" (click)="onImageClick(image)" >
+  <div class="common-material-list-img" *ngIf="activePanel === 'common'">
+    <div class="image-item" *ngFor="let image of commonMaterialsData" (click)="emitItemData(image)">
       <img [src]="image.src" [alt]="image.name">
       <span>{{ image.name }}</span>
     </div>
   </div>
-  <div class="rare-material-list-img" *ngIf="rareIsActive">
-    <div class="image-item" *ngFor="let image of rareMaterialsData" (click)="onImageClick(image)">
+  <div class="rare-material-list-img" *ngIf="activePanel === 'rare'">
+    <div class="image-item" *ngFor="let image of rareMaterialsData" (click)="emitItemData(image)">
       <img [src]="image.src" [alt]="image.name">
       <span>{{ image.name }}</span>
     </div>

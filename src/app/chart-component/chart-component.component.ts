@@ -1,15 +1,21 @@
-import {Component, Input, OnChanges, OnDestroy, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges} from '@angular/core';
 import Chart from "chart.js/auto";
+import {ConvertedData} from "../shared/interfaces/interface";
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-chart-component',
   standalone: true,
-  imports: [],
+  imports: [
+    NgIf
+  ],
   templateUrl: './chart-component.component.html',
   styleUrl: './chart-component.component.css'
 })
 export class ChartComponentComponent implements OnChanges, OnDestroy {
-  @Input() itemData: any[] = [];
+  @Input() itemData: ConvertedData[] = [];
+  @Input() selectedItem!: string;
+
   chart!: Chart;
 
   constructor() { }
@@ -28,10 +34,9 @@ export class ChartComponentComponent implements OnChanges, OnDestroy {
     }
   }
 
-  loadChart(chartType: any = 'bar'): void {
-    const labels = this.itemData.map(item => item.date) || undefined;
-    const data = this.itemData.map(item => item.price) || undefined;
-
+ public loadChart(chartType: any = 'line'): void {
+    const labels = this.itemData.map((item: ConvertedData) => item.date) || undefined;
+    const data = this.itemData.map((item: ConvertedData) => item.price) || undefined;
     const ctx = document.getElementById('myChart') as HTMLCanvasElement;
     this.chart = new Chart(ctx, {
       type: chartType,
@@ -89,10 +94,10 @@ export class ChartComponentComponent implements OnChanges, OnDestroy {
     });
   }
 
-  updateChart(): void {
+  public updateChart(): void {
     if (this.chart) {
-      const labels = this.itemData.map(item => item.date);
-      const data = this.itemData.map(item => item.price);
+      const labels = this.itemData.map((item: ConvertedData) => item.date);
+      const data = this.itemData.map((item: ConvertedData) => item.price);
 
       this.chart.data.labels = labels;
       this.chart.data.datasets[0].data = data;
